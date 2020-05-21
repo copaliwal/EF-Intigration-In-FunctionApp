@@ -10,6 +10,6 @@ namespace FunctionAppEF.EntityFramework.EntityFramework
 
         }
 
-        public DbSet<MasterOrganization> Organizations { get; set; }
+        public DbSet<MasterOrganization> MasterOrganizations { get; set; }
     }
 }
