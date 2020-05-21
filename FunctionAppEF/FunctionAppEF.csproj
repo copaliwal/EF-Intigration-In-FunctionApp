@@ -4,7 +4,12 @@
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FunctionAppEF.EntityFramework\FunctionAppEF.EntityFramework.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
