@@ -7,27 +7,38 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using FunctionAppEF.EntityFramework.EntityFramework;
+using FunctionAppEF.EntityFramework;
 
 namespace FunctionAppEF
 {
-    public static class Function1
+    public class Function1
     {
+        private IOrganizationRepository repo { get; }
+
+        public Function1(IOrganizationRepository _repo)
+        {
+            repo = _repo;
+        }
+
+
         [FunctionName("Function1")]
-        public static async Task<IActionResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
+            string responseMessage = "No Response";
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            try
+            { 
+                responseMessage = await repo.GetOrganisationConnection();
+            }
+            catch(Exception ex)
+            {
+                responseMessage = ex.Message;
+            }
 
             return new OkObjectResult(responseMessage);
         }
