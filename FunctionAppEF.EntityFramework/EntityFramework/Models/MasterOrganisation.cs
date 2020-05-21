@@ -6,12 +6,13 @@ using System.Text;
 
 namespace FunctionAppEF.EntityFramework.EntityFramework.Models
 {
+    [Table(name: "MasterOrganizations")]
     public class MasterOrganization
     {
         [Key]
         [Column("OrgId")]
         public Guid OrgId { get; set; }
         public string Name { get; set; }
-        string Connections { get; set; }
+        public string Connections { get; set; }
     }
 }
